@@ -3,15 +3,15 @@ var url = window.location.href;
 var swLocation = '/twittor/sw.js';
 
 
-if ( navigator.serviceWorker ) {
+if (navigator.serviceWorker) {
 
 
-    if ( url.includes('localhost') ) {
+    if (url.includes('localhost')) {
         swLocation = '/sw.js';
     }
 
 
-    navigator.serviceWorker.register( swLocation );
+    navigator.serviceWorker.register(swLocation);
 }
 
 
@@ -140,6 +140,22 @@ postBtn.on('click', function() {
         return;
     }
 
-    crearMensajeHTML( mensaje, usuario );
+    crearMensajeHTML(mensaje, usuario);
 
 });
+
+// Obtener mensajes del servidor
+function getMensajes() {
+    fetch('api')
+        .then(res => res.json())
+        .then(posts => {
+            console.log(posts);
+            posts.forEach(post => {
+                crearMensajeHTML(post.mensaje, post.user);
+            });
+
+
+        });
+}
+
+getMensajes();
