@@ -38,16 +38,33 @@ function actualizaCacheStatico(staticCache, req, APP_SHELL_INMUTABLE) {
 
 //Network witch cache  fallback /   update
 function manejoApiMensajes(cacheName, req) {
-    return fetch(req).then(res => {
 
-        if (res.ok) {
-            actualizaCacheDinamico(cacheName, req, res.clone());
-            return res.clone();
-        } else {
+
+    if (req.clone().method === 'POST') {
+        // POSTEO de un nuevo mensaje
+        req.clone().text().then(body => {
+            // console.log(body);
+            const bodyObj = JSON.parse(body);
+            guardarMensaje(bodyObj);
+        });
+        // Tengo que guardar  en el indexDB
+
+        return fetch(req);
+
+    } else {
+
+        return fetch(req).then(res => {
+
+            if (res.ok) {
+                actualizaCacheDinamico(cacheName, req, res.clone());
+                return res.clone();
+            } else {
+                return caches.match(req);
+            }
+
+        }).catch(err => {
             return caches.match(req);
-        }
+        });
+    }
 
-    }).catch(err => {
-        return caches.match(req);
-    });
 }
