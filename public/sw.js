@@ -1,8 +1,18 @@
 // imports
+<<<<<<< HEAD
 importScripts('https://cdn.jsdelivr.net/npm/pouchdb@7.0.0/dist/pouchdb.min.js');
+=======
+importScripts('https://cdn.jsdelivr.net/npm/pouchdb@7.0.0/dist/pouchdb.min.js')
+
+importScripts('js/sw-db.js');
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
 importScripts('js/sw-utils.js');
 importScripts('js/sw-db.js');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
 const STATIC_CACHE = 'static-v2';
 const DYNAMIC_CACHE = 'dynamic-v1';
 const INMUTABLE_CACHE = 'inmutable-v1';
@@ -77,28 +87,24 @@ self.addEventListener('activate', e => {
 
 
 
-
-
 self.addEventListener('fetch', e => {
 
     let respuesta;
 
     if (e.request.url.includes('/api')) {
 
-        //return respuesta
-
+        // return respuesta????
         respuesta = manejoApiMensajes(DYNAMIC_CACHE, e.request);
 
-
-
-
     } else {
+
         respuesta = caches.match(e.request).then(res => {
 
             if (res) {
 
                 actualizaCacheStatico(STATIC_CACHE, e.request, APP_SHELL_INMUTABLE);
                 return res;
+
             } else {
 
                 return fetch(e.request).then(newRes => {
@@ -110,8 +116,28 @@ self.addEventListener('fetch', e => {
             }
 
         });
+
     }
 
+    e.respondWith(respuesta);
+
+});
+
+
+// tareas asíncronas
+self.addEventListener('sync', e => {
+
+    console.log('SW: Sync');
+
+    if (e.tag === 'nuevo-post') {
+
+        // postear a BD cuando hay conexión
+        const respuesta = postearMensajes();
+
+        e.waitUntil(respuesta);
+    }
+
+<<<<<<< HEAD
     e.respondWith(respuesta);
 
 });
@@ -127,4 +153,8 @@ self.addEventListener('sync', e => {
         e.waitUntil(respuesta);
     }
     }
+=======
+
+
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
 });

@@ -1,4 +1,3 @@
-
 var url = window.location.href;
 var swLocation = '/twittor/sw.js';
 
@@ -20,18 +19,18 @@ if (navigator.serviceWorker) {
 
 // Referencias de jQuery
 
-var titulo      = $('#titulo');
-var nuevoBtn    = $('#nuevo-btn');
-var salirBtn    = $('#salir-btn');
+var titulo = $('#titulo');
+var nuevoBtn = $('#nuevo-btn');
+var salirBtn = $('#salir-btn');
 var cancelarBtn = $('#cancel-btn');
-var postBtn     = $('#post-btn');
-var avatarSel   = $('#seleccion');
-var timeline    = $('#timeline');
+var postBtn = $('#post-btn');
+var avatarSel = $('#seleccion');
+var timeline = $('#timeline');
 
-var modal       = $('#modal');
+var modal = $('#modal');
 var modalAvatar = $('#modal-avatar');
-var avatarBtns  = $('.seleccion-avatar');
-var txtMensaje  = $('#txtMensaje');
+var avatarBtns = $('.seleccion-avatar');
+var txtMensaje = $('#txtMensaje');
 
 // El usuario, contiene el ID del hÃ©roe seleccionado
 var usuario;
@@ -43,7 +42,7 @@ var usuario;
 
 function crearMensajeHTML(mensaje, personaje) {
 
-    var content =`
+    var content = `
     <li class="animated fadeIn fast">
         <div class="avatar">
             <img src="img/avatars/${ personaje }.jpg">
@@ -68,9 +67,9 @@ function crearMensajeHTML(mensaje, personaje) {
 
 
 // Globals
-function logIn( ingreso ) {
+function logIn(ingreso) {
 
-    if ( ingreso ) {
+    if (ingreso) {
         nuevoBtn.removeClass('oculto');
         salirBtn.removeClass('oculto');
         timeline.removeClass('oculto');
@@ -83,7 +82,7 @@ function logIn( ingreso ) {
         avatarSel.removeClass('oculto');
 
         titulo.text('Seleccione Personaje');
-    
+
     }
 
 }
@@ -111,23 +110,24 @@ salirBtn.on('click', function() {
 nuevoBtn.on('click', function() {
 
     modal.removeClass('oculto');
-    modal.animate({ 
+    modal.animate({
         marginTop: '-=1000px',
         opacity: 1
-    }, 200 );
+    }, 200);
 
 });
 
+
 // Boton de cancelar mensaje
 cancelarBtn.on('click', function() {
-    if ( !modal.hasClass('oculto') ) {
-        modal.animate({ 
+    if (!modal.hasClass('oculto')) {
+        modal.animate({
             marginTop: '+=1000px',
             opacity: 0
-         }, 200, function() {
-             modal.addClass('oculto');
-             txtMensaje.val('');
-         });
+        }, 200, function() {
+            modal.addClass('oculto');
+            txtMensaje.val('');
+        });
     }
 });
 
@@ -135,7 +135,7 @@ cancelarBtn.on('click', function() {
 postBtn.on('click', function() {
 
     var mensaje = txtMensaje.val();
-    if ( mensaje.length === 0 ) {
+    if (mensaje.length === 0) {
         cancelarBtn.click();
         return;
     }
@@ -155,28 +155,44 @@ postBtn.on('click', function() {
         })
         .then(res => res.json())
         .then(res => console.log('app.js', res))
+<<<<<<< HEAD
         .catch(err => console.log('app.json error: ', err));
+=======
+        .catch(err => console.log('app.js error:', err));
+
+
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
 
     crearMensajeHTML(mensaje, usuario);
 
 });
 
+
+
 // Obtener mensajes del servidor
 function getMensajes() {
+
     fetch('api')
         .then(res => res.json())
         .then(posts => {
+
             console.log(posts);
-            posts.forEach(post => {
-                crearMensajeHTML(post.mensaje, post.user);
-            });
+            posts.forEach(post =>
+                crearMensajeHTML(post.mensaje, post.user));
 
 
         });
+
+
 }
 
 getMensajes();
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
 // Detectar cambios de conexión
 function isOnline() {
 

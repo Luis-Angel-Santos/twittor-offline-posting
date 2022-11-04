@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 // Utilidades para grabar PuchDB
 const db = new PouchDB('mensajes');
 
 
 
 function guardarMensaje(mensaje) {
+=======
+// Utilidades para grabar PouchDB
+const db = new PouchDB('mensajes');
+
+
+function guardarMensaje(mensaje) {
+
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
     mensaje._id = new Date().toISOString();
 
     return db.put(mensaje).then(() => {
@@ -13,6 +22,7 @@ function guardarMensaje(mensaje) {
         const newResp = { ok: true, offline: true };
 
         return new Response(JSON.stringify(newResp));
+<<<<<<< HEAD
     });
 }
 
@@ -20,6 +30,19 @@ function guardarMensaje(mensaje) {
 
 function postearMensajes() {
     const posteos = [];
+=======
+
+    });
+
+}
+
+
+// Postear mensajes a la API
+function postearMensajes() {
+
+    const posteos = [];
+
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
     return db.allDocs({ include_docs: true }).then(docs => {
 
 
@@ -47,4 +70,12 @@ function postearMensajes() {
         return Promise.all(posteos);
 
     });
+<<<<<<< HEAD
+=======
+
+
+
+
+
+>>>>>>> 7969e0d4f1a4adb36adf4f537d9d946eeebd3884
 }
